@@ -1,0 +1,170 @@
+﻿<Window x:Class="VaportFrontEnd.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VaportFrontEnd"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Vapor" Height="700" Width="1270">
+    <Grid>
+        <Grid x:Name="LOGIN" Background="#FF1A1C25">
+            <Image Source="Resource/logo.png" Height="429" HorizontalAlignment="Center" VerticalAlignment="Top" Width="456" Margin="0,55,0,0" Opacity="0.05"/>
+            <StackPanel Orientation="Vertical">
+                <TextBlock HorizontalAlignment="Center" Margin="0,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" TextAlignment="Center" Height="59" Width="90" Foreground="#FFE1FFFF"><Run Language="en-ca" Text="VAPOR"/><LineBreak/><Run Language="en-ca"/></TextBlock>
+                <Label Content="If there are no accounts, you must manually edit the database (market_builder.txt) in order to add one." HorizontalAlignment="Center" Foreground="#FFE1FFFF" Opacity="0.5" FontStyle="Italic"/>
+                <TextBox x:Name="usernameField" HorizontalAlignment="Center" Margin="0,10,0,0" Text="Username..." TextWrapping="Wrap" VerticalAlignment="Top" Width="198" Background="#FF323647" BorderBrush="{x:Null}" Foreground="#FFE1FFFB"/>
+                <Button x:Name="loginButton" Content="LOGIN" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top" Width="90" Click="loginButton_Click" Background="#FF867DE9" FontWeight="Bold"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="MAIN" Background="#FF1A1C25" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Resource/logo.png" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Width="70" Opacity="0.5"/>
+                <TextBlock HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FFE1FFFF" FontSize="18" FontWeight="Bold"><Run Language="en-ca" Text="MARKET"/></TextBlock>
+            </StackPanel>
+            <ListBox x:Name="GamesListBox" Margin="10" Background="#FF20232E" Foreground="#FFE8DEDE" Grid.Row="1" SelectionChanged="GamesListBox_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resource/placeholder.png" Height="100"/>
+                            <StackPanel Orientation="Vertical" Margin="10, 2">
+                                <TextBlock Text="{Binding Path=Key.game.name}" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock Text="{Binding Path=Key.price, StringFormat={}${0:#\\.##}}"/>
+                                <TextBlock Text="{Binding Path=Value}" FontStyle="Italic"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button x:Name="buyButton" Grid.Row="2" Margin="10" Content="BUY" FontSize="18" FontWeight="Bold" Click="buyButton_Click" Background="#FF867DE9"/>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+                <Button x:Name="adminPanelButton" Content="Admin Panel" Width="100" FontWeight="Bold" VerticalAlignment="Top" Margin="0, 5, 10, 10" Click="adminPanelButton_Click" Background="#FF867DE9"/>
+                <Button x:Name="profileButton" Content="Profile" Width="50" FontWeight="Bold" VerticalAlignment="Top" Margin="0, 5, 10, 10" Click="profileButton_Click" Background="#FF867DE9"/>
+                <Label x:Name="signedinText" Content="Signed in as: Juan" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FFE1FFFF"/>
+                <Label x:Name="availableCreditsText" Content="Available Credits: 175" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold" Foreground="#FFE1FFFF"/>
+            </StackPanel>
+            <StackPanel x:Name="gameDetails" Grid.Column="1" Grid.Row="1" Orientation="Vertical" Margin="10" Visibility="Hidden">
+                <Image Source="Resource/banner.png"/>
+                <Label x:Name="gameDescName" Content="Game Name" FontSize="19" FontWeight="Bold" Foreground="#FFE1FFFF"/>
+                <Label x:Name="sellerNamedesc" Content="sold by: " Foreground="#FFE1FFFF" Opacity="0.5"/>
+                <Label Content="Game Description: " Foreground="#FFE1FFFF" FontSize="13"/>
+                <TextBlock TextWrapping="WrapWithOverflow" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." Margin="10" Foreground="#FFE1FFFF" Height="165"/>
+            </StackPanel>
+
+            <Button x:Name="logoutButton" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="10" Width="100" Content="LOGOUT" FontSize="15" FontWeight="Bold" Click="logoutButton_Click" Background="#FF867DE9"/>
+        </Grid>
+
+        <Grid x:Name="PROFILE" Background="#FF1A1C25" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="backbutton" Background="#FF867DE9" Content="Back" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="backbutton_Click" Width="49"/>
+            <StackPanel Orientation="Vertical" Margin="10">
+                <Label x:Name="BuyerInfo" Margin="0, 90, 0, 0" Content="Buyer accounts may not sell a game." HorizontalAlignment="Center"  VerticalAlignment="Top" FontStyle="Italic" FontSize="10" Background="{x:Null}" Foreground="#FFECFCFF" Visibility="Hidden"/>
+                <Label Content="List a game for sale:" HorizontalAlignment="Center"  VerticalAlignment="Top" FontWeight="Bold" FontSize="18" Background="{x:Null}" Foreground="#FFECFCFF"/>
+                <TextBox Margin="10" x:Name="ListingGameName" HorizontalAlignment="Center"  Text="Game name..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                <TextBox Margin="10" x:Name="ListingGamePrice" HorizontalAlignment="Center"  Text="Game price..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                <TextBox Margin="10" MaxLength="2" x:Name="ListingGameDiscount"  Text="Game discount..." TextWrapping="Wrap" Width="162"/>
+                <Button x:Name="ListGameButton" Height="20" Margin="20" Width="162" Content="List game" Background="#FF867DE9" FontWeight="Bold" Click="ListGameButton_Click"/>
+            </StackPanel>
+
+            <!-- ADD CREDITS -->
+            <StackPanel Orientation="Vertical" Grid.Column="2">
+                <Label Grid.Column="2" Content="Deposit Credits" FontSize="20" FontWeight="Bold" Margin="0, 90, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                <TextBox MaxLength="9" Margin="10" x:Name="AddCreditsAmount" HorizontalAlignment="Center" Text="Credits to add..." PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                <Button x:Name="AddCreditsButton" Height="20" Margin="20" Width="162" Content="Add" Background="#FF867DE9" FontWeight="Bold" Click="AddCreditsButton_Click"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Center">
+                <Label x:Name="usernameLabel" Content="Frostiae" FontSize="30" FontWeight="Normal" Grid.Column="1" HorizontalAlignment="Center" Margin="0,87,0,0" VerticalAlignment="Top" Foreground="#FF867DE9" FontStyle="Italic"/>
+                <Label x:Name="currentBalanceLabel" Content="Current balance: " FontSize="30" FontWeight="Bold" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Listed games" FontSize="25" FontWeight="Normal" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                        <ListBox x:Name="listedGamesListBox" Grid.Column="1" Margin="10" Background="{x:Null}" Width="227" Height="227" SelectionChanged="listedGamesListBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=game.name}" FontSize="16" HorizontalAlignment="Center" Foreground="#FFECFCFF"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Owned games" FontSize="25" FontWeight="Normal" Grid.Column="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                        <ListBox x:Name="ownedGamesListBox" Grid.Column="1" Margin="10" Background="{x:Null}" Width="227" Height="227" SelectionChanged="ownedGamesListBox_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding name}" FontSize="16" HorizontalAlignment="Center" Foreground="#FFECFCFF"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Width="300">
+                    <TextBox MaxLength="15" Margin="10" x:Name="GiftGameUsername" HorizontalAlignment="Center" Text="Gift receiver..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                    <Button x:Name="GiftGameButton" Content="Gift" Width="100" Height="20" Background="#FF867DE9" FontWeight="Bold" Click="GiftGameButton_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+
+
+        </Grid>
+        <Grid x:Name="ADMINPANEL" Background="#FF1A1C25" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Button Grid.Column="0" x:Name="backbutton2" Background="#FF867DE9" Content="Back" HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top" Click="backbutton_Click" Width="49"/>
+                <Label Content="ADMIN PANEL" Foreground="#FFECFCFF" FontWeight="Bold" FontSize="15" Margin="5" VerticalAlignment="Top"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Column="0" VerticalAlignment="Center">
+                <Label Content="Create an Account" FontSize="20" FontWeight="Bold" Margin="0, 10, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                <TextBox MaxLength="15" Margin="10" x:Name="CreateUsernameAccount" HorizontalAlignment="Center" Text="Account username..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                <ComboBox x:Name="userTypesComboBox" Width="162" Background="#FF867DE9"/>
+                <Button x:Name="CreateAccountButton" Height="20" Margin="20" Width="162" Content="Create" Background="#FF867DE9" FontWeight="Bold" Click="CreateAccountButton_Click"/>
+
+                <Label Content="Users in the market:" HorizontalAlignment="Center" Foreground="#FFECFCFF" FontSize="13"/>
+                <ListBox x:Name="allUsersListBox" Height="150" Width="227" Background="{x:Null}" SelectionChanged="allUsersListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding username}" FontSize="13" HorizontalAlignment="Center" Foreground="#FFECFCFF"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Vertical">
+                <StackPanel x:Name="selectedDetails" Orientation="Vertical" Margin="0, 0, 0, 60" Visibility="Hidden" HorizontalAlignment="Center">
+                    <Label x:Name="selectedUsername" Content="Username" Foreground="#FF867DE9" FontSize="20" FontWeight="Bold"/>
+                    <Label x:Name="selectedBalance" Content="Balance: " Foreground="#FFE6FCFF" FontSize="12" FontWeight="Bold"/>
+                    <Label x:Name="selectedType" Content="Type: " Foreground="#FFE6FCFF" FontSize="12" FontWeight="Bold"/>
+                </StackPanel>
+                
+                <Label Content="Refund a User" FontSize="20" FontWeight="Bold" Margin="0, 10, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBox MaxLength="15" Margin="10" x:Name="refundFROMuser" HorizontalAlignment="Center" Text="Refunder username..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                    <Label Content="to" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FFECFCFF"/>
+                    <TextBox MaxLength="15" Margin="10" x:Name="refundTOuser" HorizontalAlignment="Center" Text="Receiver username..." TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                </StackPanel>
+                <TextBox MaxLength="9" Margin="10" x:Name="refundAmount" HorizontalAlignment="Center" Text="Refund amount..." PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+                <Button x:Name="refundButton" Height="20" Margin="10" Width="162" Content="Refund" Background="#FF867DE9" FontWeight="Bold" Click="refundButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

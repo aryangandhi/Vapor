@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resource\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resource\banner.png" />
+    <None Remove="Resource\logo.ico" />
+    <None Remove="Resource\logo.png" />
+    <None Remove="Resource\placeholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\banner.png" />
+    <Resource Include="Resource\logo.ico" />
+    <Resource Include="Resource\logo.png" />
+    <Resource Include="Resource\placeholder.png" />
+  </ItemGroup>
+
+</Project>
